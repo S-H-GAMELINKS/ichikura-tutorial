@@ -8,7 +8,7 @@ task :new_user => :environment do
     stream.firehose() do |toot|
         if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ then
             message = ("@S_H_@ichiji.social いちくらにようこそ！")
-            response = client.create_status(message, :visibility => 'unlisted')
+            response = client.create_status(message)
             exit
         end
     end
