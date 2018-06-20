@@ -21,7 +21,7 @@ task :ltl_user_get => :environment do
     stream = Mastodon::Streaming::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
 
     stream.firehose() do |toot|
-        if User.where(:uid => "#{toot.account.acct}@ichiji.social").empty? == true then
+        if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ && User.where(:uid => "#{toot.account.acct}@ichiji.social").empty? == true then
             User.create!(:uid => "#{toot.account.acct}@ichiji.social")
         end
     end
