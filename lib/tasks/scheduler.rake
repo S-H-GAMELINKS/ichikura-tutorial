@@ -54,7 +54,7 @@ task :singing => :environment do
     bot_name = ENV['BOT_NAME']
 
     stream.firehose() do |toot|
-        if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ && toot.uri.to_s =~ /#{bot_name}/ && toot.content =~ /歌って！/ then
+        if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ && toot.content =~ /#{bot_name}/ && toot.content =~ /歌って！/ then
             response = client.create_status("@#{toot.account.acct} さん\n でいじ～でいじ～ \n ぎぶみ～　ゆあ　あんさぁ　どぅ！\n")
             exit
         end
