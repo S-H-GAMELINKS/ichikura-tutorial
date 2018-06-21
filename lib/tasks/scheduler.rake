@@ -7,7 +7,7 @@ task :new_user_mention => :environment do
     
     stream.firehose() do |toot|
         if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ && toot.account.created_at >= DateTime.now.beginning_of_day && User.where(:uid => "#{toot.account.acct}@ichiji.social").empty? == true then
-            message = ("#{toot.account.acct}@ichiji.social いちくらにようこそ！")
+            message = ("@#{toot.account.acct}@ichiji.social いちくらにようこそ！")
             response = client.create_status(message)
             User.create!(:uid => "#{toot.account.acct}@ichiji.social")
             exit
