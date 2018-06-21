@@ -43,3 +43,19 @@ task :ltl_user_get => :environment do
         end
     end
 end
+
+task :singing => :environment do
+
+    require 'mastodon'
+
+    stream = Mastodon::Streaming::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
+    client = Mastodon::REST::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
+ 
+    bot_name = ENV['BOT_NAME']
+
+    stream.firehose() do |toot|
+        if toot.uri.to_s =~ /#{bot_name/ && toot.content =~ /歌って！/ then
+            client.create_status("@#{toot.account.acct} さん\n でいじ～でいじ～ \n ぎぶみ～　ゆあ　あんさぁ　どぅ！\n")
+        end
+    end
+end
