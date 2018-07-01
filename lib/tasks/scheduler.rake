@@ -14,11 +14,7 @@ task :new_user_mention => :environment do
         if toot.uri.to_s =~ /#{ENV['MASTODON_URL'].to_s}/ && toot.account.created_at >= DateTime.now.beginning_of_day && User.where(:uid => "#{toot.account.acct}@ichiji.social").empty? == true then
 
             #ご新規さん向けのWelcomeメンション
-            message = ("@#{toot.account.acct}@ichiji.social いちくらにようこそ！\n 
-                        このアカウントはいちくら初心者のためのbotです。\n 
-                        初めての方にご案内します。\n\n 
-                        詳しくはこちらのURLを参照ください。\n\n
-                        http://urahito-solution.hatenablog.com/ichikura-tutorial")
+            message = ("@#{toot.account.acct}@ichiji.social いちくらにようこそ！\n このアカウントはいちくら初心者のためのbotです。\n 初めての方にご案内します。\n\n 詳しくはこちらのURLを参照ください。\n\n http://urahito-solution.hatenablog.com/ichikura-tutorial")
             response = client.create_status(message)
 
             # 既にメンションを送った新規さんをDBに保存
